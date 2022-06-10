@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string("title");
             $table->string("slug");
             $table->text("body")->nullable($value = true)->collation('utf8mb4_general_ci');
-            $table->unsignedBigInteger("category_id")->unsigned();
             $table->unsignedBigInteger("user_id")->unsigned();
+            $table->unsignedBigInteger("category_id")->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
