@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\like;
+use App\Models\Reply;
 use App\Http\Requests\StorelikeRequest;
 use App\Http\Requests\UpdatelikeRequest;
 
@@ -13,9 +14,12 @@ class LikeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function likeIt(Reply $reply)
     {
-        //
+        $reply->like()->create([
+            // 'user_id' => auth()->id()
+            'user_id' => '1'
+        ]);
     }
 
     /**
@@ -23,9 +27,10 @@ class LikeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function unlikeIt(Reply $reply)
     {
-        //
+        // $reply->like()->where(['user_id', auth()->id()])->first()->delete();
+        $reply->like()->where('user_id', "1")->first()->delete();
     }
 
     /**
