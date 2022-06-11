@@ -3,14 +3,19 @@
         <v-toolbar dense>
             <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-            <v-toolbar-title>Title</v-toolbar-title>
+            <v-toolbar-title>SPA</v-toolbar-title>
 
             <v-spacer></v-spacer>
 
-            <v-btn flat> Forum </v-btn>
-            <v-btn flat> Ask Question </v-btn>
-            <v-btn flat> Categories </v-btn>
-            <v-btn flat> Login </v-btn>
+            <router-link to="/forum">
+                <v-btn text> Forum </v-btn>
+            </router-link>
+
+            <v-btn text> Ask Question </v-btn>
+            <v-btn text> Categories </v-btn>
+            <router-link to="/login">
+                <v-btn text> Login </v-btn>
+            </router-link>
 
             <v-btn icon>
                 <v-icon>mdi-magnify</v-icon>
