@@ -4,6 +4,13 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class Handler extends ExceptionHandler
 {
@@ -43,8 +50,38 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        // $this->reportable(function (Throwable $e) {
+        //     //
+        // });
+
+        $this->renderable(function (TokenExpiredException $e, $request) {
+            if ($e instanceof TokenExpiredException && $request->wantsJson()) {
+                return response()->json([
+                    'code' => Response::HTTP_NOT_ACCEPTABLE,
+                    'status' => false,
+                    'message' => 'Token expired.'
+                ], Response::HTTP_NOT_ACCEPTABLE);
+            }
+        });
+
+        $this->renderable(function (TokenInvalidException $e, $request) {
+            if ($e instanceof TokenInvalidException && $request->wantsJson()) {
+                return response()->json([
+                    'code' => Response::HTTP_UNAUTHORIZED,
+                    'status' => false,
+                    'message' => 'The token is invalid.'
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+        });
+
+        $this->renderable(function (JWTException $e, $request) {
+            if ($e instanceof JWTException && $request->wantsJson()) {
+                return response()->json([
+                    'code' => Response::HTTP_NOT_FOUND,
+                    'status' => false,
+                    'message' => 'The token is required.'
+                ], Response::HTTP_NOT_FOUND);
+            }
         });
     }
 }
