@@ -18,7 +18,11 @@
                 counter
             ></v-text-field>
 
-            <v-btn color="primary" type="submit" class="mr-4"> Submit </v-btn>
+            <v-btn color="primary" type="submit" class="mr-4"> login </v-btn>
+
+            <router-link to="/signup">
+                <v-btn text> Sign Up </v-btn>
+            </router-link>
         </v-form>
     </v-container>
 </template>
@@ -34,6 +38,11 @@ export default {
                 password: null,
             },
         };
+    },
+    created() {
+        if (User.loggedIn()) {
+            this.$router.push({ name: "forum" });
+        }
     },
     methods: {
         login() {

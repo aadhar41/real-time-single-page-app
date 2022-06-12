@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\SignupRequest;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -37,7 +38,7 @@ class AuthController extends Controller
     }
 
 
-    public function signup(Request $request)
+    public function signup(SignupRequest $request)
     {
         $request->password = Hash::make($request->password);
         User::create($request->all());

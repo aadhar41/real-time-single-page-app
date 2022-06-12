@@ -7,33 +7,37 @@
 
             <v-spacer></v-spacer>
 
-            <router-link to="/forum">
-                <v-btn text> Forum </v-btn>
+            <router-link
+                v-for="item in items"
+                :key="item.title"
+                :to="item.to"
+                v-if="item.show"
+            >
+                <v-btn text> {{ item.title }} </v-btn>
             </router-link>
-
-            <v-btn text> Ask Question </v-btn>
-            <v-btn text> Categories </v-btn>
-            <router-link to="/login">
-                <v-btn text> Login </v-btn>
-            </router-link>
-
-            <v-btn icon>
-                <v-icon>mdi-magnify</v-icon>
-            </v-btn>
-
-            <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-            </v-btn>
-
-            <v-btn icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
         </v-toolbar>
     </div>
 </template>
 
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            items: [
+                { title: "Forum", to: "/forum", show: true },
+                { title: "Ask Question", to: "/ask", show: User.loggedIn() },
+                { title: "Category", to: "/category", show: User.loggedIn() },
+                { title: "Login", to: "/login", show: !User.loggedIn() },
+                { title: "Logout", to: "/logout", show: User.loggedIn() },
+            ],
+        };
+    },
+    created() {
+        EventBus.$on("logout", () => {
+            User.logout();
+        });
+    },
+};
 </script>
 
 <style></style>
