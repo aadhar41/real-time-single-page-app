@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Reply;
 use App\Models\Category;
+use Illuminate\Support\Str;
 
 class Question extends Model
 {
@@ -17,14 +18,23 @@ class Question extends Model
      *
      * @var array
      */
-    // protected $fillable = ['id', 'title', 'slug', 'body', 'user_id', 'category_id'];
+    protected $fillable = ['title', 'slug', 'body', 'user_id', 'category_id'];
 
     /**
      * The attributes that aren't mass assignable.
      *
      * @var array
      */
-    protected $guarded = [];
+    // protected $guarded = [""];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($question) {
+            $question->slug =
+                Str::slug($question->title, '-');
+        });
+    }
 
     public function getRouteKeyName()
     {
@@ -48,6 +58,6 @@ class Question extends Model
 
     public function getPathAttribute()
     {
-        return asset("api/question/$this->slug");
+        return ("question/$this->slug");
     }
 }

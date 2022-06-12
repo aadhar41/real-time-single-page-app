@@ -14,12 +14,33 @@ import router from "./Router/router.js";
 
 Vue.use(Vuetify)
 
+
+import VueMarkdownEditor from '@kangc/v-md-editor';
+
+// Prism
+import Prism from 'prismjs';
+// highlight code
+import 'prismjs/components/prism-json';
+import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
+import enUS from '@kangc/v-md-editor/lib/lang/en-US';
+
+VueMarkdownEditor.use(vuepressTheme, {
+    Prism,
+});
+
+VueMarkdownEditor.lang.use('en-US', enUS);
+
+Vue.use(VueMarkdownEditor);
+import md from "marked";
+window.md = md;
+
 import User from './Helpers/User'
 window.User = User
 
 window.EventBus = new Vue();
 
 const vuetify = new Vuetify();
+
 
 /**
  * The following block of code may be used to automatically register your

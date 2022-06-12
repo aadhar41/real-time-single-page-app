@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateQuestionRequest;
 use App\Http\Resources\QuestionResource;
 use Spatie\FlareClient\Http\Response as HttpResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Str;
 
 class QuestionController extends Controller
 {
@@ -40,9 +41,8 @@ class QuestionController extends Controller
      */
     public function store(StoreQuestionRequest $request)
     {
-        // auth()->user()->question()->create($request->all());
-        Question::create($request->all());
-        return response('Created', Response::HTTP_CREATED);
+        $question = auth()->user()->question()->create($request->all());
+        return response(new QuestionResource($question), Response::HTTP_CREATED);
     }
 
     /**

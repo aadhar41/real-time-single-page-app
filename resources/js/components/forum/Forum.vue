@@ -1,25 +1,36 @@
 <template>
-    <v-container>
-        <h1>Forum</h1>
+    <v-container fluid grid-list-md>
+        <v-layout row wrap>
+            <v-flex xs8>
+                <question
+                    v-for="question in questions"
+                    :key="question.path"
+                    :data="question"
+                ></question>
+                <v-spacer></v-spacer>
+            </v-flex>
+            Sidebar
+        </v-layout>
     </v-container>
 </template>
 
 <script>
-import axios from "axios";
+import question from "./question";
 
 export default {
     data() {
         return {
-            form: {
-                email: null,
-                password: null,
-            },
+            questions: {},
         };
     },
-    methods: {
-        login() {
-            User.login(this.form);
-        },
+    components: {
+        question,
+    },
+    created() {
+        axios
+            .get("/api/question")
+            .then((res) => (this.questions = res.data.data))
+            .catch((error) => console.log(error.response.data));
     },
 };
 </script>
