@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mx-auto mb-3" max-width="600">
+    <v-card class="mx-auto ma-3">
         <v-card-title>
             <router-link :to="data.path">
                 {{ data.title }}

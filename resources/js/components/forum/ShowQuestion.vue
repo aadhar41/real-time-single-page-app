@@ -5,13 +5,9 @@
                 <div>Question</div>
                 <p class="text-h4 text--primary">
                     {{ data.title }}
-                    <v-badge
-                        class="float-right"
-                        bordered
-                        color="error"
-                        icon="5"
-                        overlap
-                    >
+
+                    <v-badge color="error" class="float-right" bordered overlap>
+                        <span slot="badge"> {{ data.reply_count }} </span>
                         <v-btn class="white--text" color="primary" depressed>
                             Replies
                         </v-btn>
