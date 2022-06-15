@@ -1,10 +1,14 @@
 <template>
     <v-card class="mb-2">
         <v-card-text>
+            <div class="float-right"><Like :content="data"></Like></div>
             <edit-reply v-if="editing" :reply="data"></edit-reply>
+
             <p class="text--primary" v-else v-html="reply"></p>
+
             <v-divider></v-divider>
             <p class="mt-3">{{ data.user }} @ {{ data.created_at }}</p>
+
             <v-divider v-if="own"></v-divider>
             <div v-if="!editing">
                 <v-card-actions v-if="own">
@@ -41,12 +45,14 @@
 
 <script>
 import editReply from "./editReply";
+import Like from "../likes/like.vue";
 export default {
-    components: { editReply },
+    components: { editReply, Like },
     props: ["data", "index"],
     data() {
         return {
             editing: false,
+            beforeEditReplyBody: "",
         };
     },
     computed: {
@@ -66,10 +72,15 @@ export default {
         },
         edit() {
             this.editing = true;
+            this.beforeEditReplyBody = this.data.reply;
         },
         listen() {
-            EventBus.$on("cancelEditing", () => {
+            EventBus.$on("cancelEditing", (reply) => {
                 this.editing = false;
+                if (reply !== this.data.reply) {
+                    this.data.reply = this.beforeEditReplyBody;
+                    this.beforeEditReplyBody = "";
+                }
             });
         },
     },

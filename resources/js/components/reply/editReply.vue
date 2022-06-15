@@ -43,8 +43,8 @@ export default {
         };
     },
     methods: {
-        cancel() {
-            EventBus.$emit("cancelEditing");
+        cancel(reply) {
+            EventBus.$emit("cancelEditing", reply);
         },
         update() {
             axios
@@ -53,7 +53,7 @@ export default {
                     { body: this.reply.reply }
                 )
                 .then((res) => {
-                    this.cancel();
+                    this.cancel(this.reply.reply);
                 })
                 .catch((err) => {
                     console.log(err);
