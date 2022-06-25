@@ -34,10 +34,11 @@ class CategoryController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreCategoryRequest  $request
-     * @return \Illuminate\Http\Response
+     * We create a new category, assign the name and slug, and save it
+     * 
+     * @param \App\Http\Requests\StoreCategoryRequest  $request The request object.
+     * 
+     * @return A new CategoryResource object.
      */
     public function store(StoreCategoryRequest $request)
     {
@@ -62,11 +63,13 @@ class CategoryController extends Controller
 
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateCategoryRequest  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * We are updating the category with the name and slug from the request
+     * 
+     * @param \App\Http\Requests\UpdateCategoryRequest  $request The request object that contains the data that was sent to
+     * the server.
+     * @param \App\Models\Category  $category This is the model that we are updating.
+     * 
+     * @return \Illuminate\Http\Response A response with the updated category and a status code of 202.
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
@@ -80,11 +83,13 @@ class CategoryController extends Controller
         return response(new CategoryResource($category), Response::HTTP_ACCEPTED);
     }
 
+
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * It deletes the category and returns a 204 No Content response
+     * 
+     * @param \App\Models\Category  $category The model that we want to use for the resource controller.
+     * 
+     * @return \Illuminate\Http\Response A 204 No Content response.
      */
     public function destroy(Category $category)
     {

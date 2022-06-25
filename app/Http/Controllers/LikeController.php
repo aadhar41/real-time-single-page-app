@@ -20,10 +20,11 @@ class LikeController extends Controller
     }
 
 
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Create a new like for the reply, and associate it with the currently authenticated user.
+     * 
+     * @param Reply reply The reply that we want to like.
      */
     public function likeIt(Reply $reply)
     {
@@ -32,10 +33,12 @@ class LikeController extends Controller
         ]);
     }
 
+
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * It deletes the like record from the database where the user_id is equal to the authenticated
+     * user's id.
+     * 
+     * @param Reply $reply This is the reply that we are liking or unliking.
      */
     public function unlikeIt(Reply $reply)
     {

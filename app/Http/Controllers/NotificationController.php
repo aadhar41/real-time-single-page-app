@@ -10,10 +10,11 @@ use App\Http\Resources\NotificationResource;
 
 class NotificationController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * It returns an array of two keys, one for read notifications and one for unread notifications
+     * 
+     * @return \Illuminate\Http\Response An array of read and unread notifications.
      */
     public function index()
     {
@@ -33,11 +34,14 @@ class NotificationController extends Controller
         //
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StorenotificationRequest  $request
-     * @return \Illuminate\Http\Response
+     * It marks as read the notifications of the authenticated user, when the id is present in the
+     * request, it filters the notifications by id
+     * 
+     * @param \App\Http\Requests\StorenotificationRequest  $request The request object.
+     * 
+     * @return \Illuminate\Http\Response A 204 No Content response.
      */
     public function markAsRead(StorenotificationRequest $request)
     {

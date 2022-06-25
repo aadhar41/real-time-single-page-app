@@ -22,9 +22,10 @@ class AuthController extends Controller
     }
 
     /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * The function takes the email and password from the request, and if the credentials are correct,
+     * it returns a token. Get a JWT via given credentials.
+     * 
+     * @return \Illuminate\Http\JsonResponse A token
      */
     public function login()
     {
@@ -38,6 +39,13 @@ class AuthController extends Controller
     }
 
 
+    /**
+     * It creates a new user with the data from the request, and then logs the user in
+     * 
+     * @param SignupRequest request The request object.
+     * 
+     * @return The login function is being returned.
+     */
     public function signup(SignupRequest $request)
     {
         $request->password = Hash::make($request->password);
@@ -45,20 +53,22 @@ class AuthController extends Controller
         return $this->login($request);
     }
 
+
     /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * It returns the currently authenticated user. Get the authenticated User.
+     * 
+     * @return \Illuminate\Http\JsonResponse The user that is currently logged in.
      */
     public function me()
     {
         return response()->json(auth()->user());
     }
 
+
     /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * It logs out the user. Log the user out (Invalidate the token).
+     * 
+     * @return \Illuminate\Http\JsonResponse A JSON response with a message.
      */
     public function logout()
     {
@@ -68,20 +78,21 @@ class AuthController extends Controller
     }
 
     /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * It takes the token from the request, decodes it, and returns the user's ID. Refresh a token.
+     * 
+     * @return \Illuminate\Http\JsonResponse The token is being returned.
      */
     public function refresh()
     {
         return $this->respondWithToken(auth()->refresh());
     }
 
+
     /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
+     * It returns a JSON response with the access token, token type, expiration time, and the user's
+     * name. Get the token array structure.
+     * 
+     * @param string $token The JWT
      * @return \Illuminate\Http\JsonResponse
      */
     protected function respondWithToken($token)
@@ -94,11 +105,12 @@ class AuthController extends Controller
         ]);
     }
 
+
     /**
-     * Undocumented function
-     *
+     * It returns the payload of the authenticated user.
+     * 
      * @param Type|null $var
-     * @return void
+     * @return The payload is being returned.
      */
     public function payload()
     {

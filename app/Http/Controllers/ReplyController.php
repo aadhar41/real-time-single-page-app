@@ -12,10 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ReplyController extends Controller
 {
+
     /**
-     * Create a new AuthController instance.
-     *
-     * @return void
+     * The `__construct()` function is a special function that is called when an object is instantiated.
+     * In this case, we are using it to call the `middleware()` function, which is a Laravel function
+     * that allows us to specify which routes are protected by the JWT middleware
      */
     public function __construct()
     {
@@ -23,10 +24,11 @@ class ReplyController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @param  \App\Models\Question  $question
-     * @return \Illuminate\Http\Response
+     * It returns a collection of replies for a given question
+     * 
+     * @param \App\Models\Question  $question This is the route model binding.
+     * 
+     * @return \Illuminate\Http\Response A collection of replies
      */
     public function index(Question $question)
     {
@@ -34,13 +36,17 @@ class ReplyController extends Controller
     }
 
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Models\Question  $question
-     * @param  \App\Models\Reply  $reply
-     * @param  \App\Http\Requests\StoreReplyRequest  $request
-     * @return \Illuminate\Http\Response
+     * We create a new reply for the question, then we check if the user who created the reply is not
+     * the same as the user who created the question. If it's not the same, we notify the user who
+     * created the question
+     * 
+     * @param \App\Http\Requests\StoreReplyRequest  $request The request object.
+     * @param \App\Models\Question  $question This is the question model that we are using to create the reply.
+     * @param \App\Models\Reply  $reply The reply model instance.
+     * 
+     * @return \Illuminate\Http\Response A new reply resource.
      */
     public function store(StoreReplyRequest $request, Question $question, Reply $reply)
     {
@@ -52,12 +58,14 @@ class ReplyController extends Controller
         return response(["reply" => new ReplyResource($reply)], Response::HTTP_CREATED);
     }
 
+
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Question  $question
-     * @param  \App\Models\Reply  $reply
-     * @return \Illuminate\Http\Response
+     * It returns a new instance of the ReplyResource class, passing in the  variable
+     * 
+     * @param \App\Models\Question  $question This is the question that the reply belongs to.
+     * @param \App\Models\Reply  $reply This is the model binding that we did in the route.
+     * 
+     * @return \Illuminate\Http\Response A ReplyResource
      */
     public function show(Question $question, Reply $reply)
     {
@@ -66,12 +74,14 @@ class ReplyController extends Controller
 
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Models\Question  $question
-     * @param  \App\Http\Requests\UpdateReplyRequest  $request
-     * @param  \App\Models\Reply  $reply
-     * @return \Illuminate\Http\Response
+     * It updates the reply with the request data and returns a response with the status code of 202
+     * 
+     * @param \App\Http\Requests\UpdateReplyRequest  $request The request object.
+     * @param \App\Models\Question  $question This is the question model that we are using to find the question that
+     * the reply belongs to.
+     * @param \App\Models\Reply  $reply This is the model binding that we did in the route.
+     * 
+     * @return \Illuminate\Http\Response The response is being returned as a string.
      */
     public function update(UpdateReplyRequest $request, Question $question, Reply $reply)
     {
@@ -79,12 +89,15 @@ class ReplyController extends Controller
         return response('Updated', Response::HTTP_ACCEPTED);
     }
 
+
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Question  $question
-     * @param  \App\Models\Reply  $reply
-     * @return \Illuminate\Http\Response
+     * The `destroy` function deletes a reply and returns a 204 No Content response
+     * 
+     * @param \App\Models\Question  $question This is the question that the reply belongs to.
+     * @param \App\Models\Reply  $reply This is the reply that we want to delete.
+     * 
+     * @return \Illuminate\Http\Response The response is returning a 204 status code, which means that the request was successful,
+     * but there is no content to return.
      */
     public function destroy(Question $question, Reply $reply)
     {

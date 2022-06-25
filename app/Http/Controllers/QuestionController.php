@@ -22,10 +22,12 @@ class QuestionController extends Controller
         $this->middleware('JWT', ['except' => ['index', 'show']]);
     }
 
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * It returns a collection of QuestionResource objects, which are created from the latest questions
+     * in the database
+     * 
+     * @return \Illuminate\Http\Response A collection of QuestionResource
      */
     public function index()
     {
@@ -34,10 +36,11 @@ class QuestionController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreQuestionRequest  $request
-     * @return \Illuminate\Http\Response
+     * It creates a new question, and returns a response with the newly created question
+     * 
+     * @param \App\Http\Requests\StoreQuestionRequest  $request The request object.
+     * 
+     * @return \Illuminate\Http\Response A new QuestionResource object.
      */
     public function store(StoreQuestionRequest $request)
     {
@@ -45,11 +48,14 @@ class QuestionController extends Controller
         return response(new QuestionResource($question), Response::HTTP_CREATED);
     }
 
+
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Question  $question
-     * @return \Illuminate\Http\Response
+     * It takes a question object and returns a question resource
+     * 
+     * @param \App\Models\Question  $question This is the route model binding. Laravel will automatically inject the
+     * model instance that has an ID matching the corresponding value from the request URI.
+     * 
+     * @return \Illuminate\Http\Response A new instance of QuestionResource
      */
     public function show(Question $question)
     {
@@ -57,13 +63,15 @@ class QuestionController extends Controller
     }
 
 
-
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateQuestionRequest  $request
-     * @param  \App\Models\Question  $question
-     * @return \Illuminate\Http\Response
+     * It takes an UpdateQuestionRequest object, a Question object, updates the Question object with the
+     * data from the UpdateQuestionRequest object, and returns a QuestionResource object
+     * 
+     * @param \App\Http\Requests\UpdateQuestionRequest  $request The request object that contains the data that was sent to
+     * the server.
+     * @param \App\Models\Question  $question This is the model that we are updating.
+     * 
+     * @return \Illuminate\Http\Response A QuestionResource object.
      */
     public function update(UpdateQuestionRequest $request, Question $question)
     {
@@ -71,11 +79,14 @@ class QuestionController extends Controller
         return response(new QuestionResource($question), Response::HTTP_ACCEPTED);
     }
 
+
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Question  $question
-     * @return \Illuminate\Http\Response
+     * It deletes the question and returns a 204 No Content response
+     * 
+     * @param \App\Models\Question  $question This is the variable that will contain the Question model instance that
+     * corresponds to the ID in the route.
+     * 
+     * @return \Illuminate\Http\Response The question is being deleted and a 204 status code is being returned.
      */
     public function destroy(Question $question)
     {
